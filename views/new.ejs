@@ -1,0 +1,59 @@
+<% layout('/layouts/boilerPlate') -%>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <br>
+  <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div class="row offset-3">
+      <br><br>
+      <h2>Create New List</h2>
+      <div class="col-8">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="listing[title]" placeholder="Title" class="form-control" required>
+          <div class="valid-feedback">Title looks good</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea name="listing[description]" placeholder="Description" class="form-control" type="text" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Image</label>
+          <input name="listing[image]" alt="image" type="file" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" name="listing[price]" placeholder="Price in Rs.1200" class="form-control" required>
+          <div class="invalid-feedback">Please enter valid Price</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location class=" form-label">Location</label>
+          <input type="text" name="listing[location]" placeholder="Mumbai" class="form-control" required>
+          <div class="invalid-feedback">Please enter valid Location</div>
+        </div>
+
+        <div>
+          <label for="country class=" form-label">Country</label>
+          <input type="text" name="listing[country]" placeholder="India" class="form-control" required><br><br>
+          <div class="invalid-feedback">Please enter valid Country</div>
+        </div>
+
+        <button type="submit" class="btn btn-dark mb-3 add-btn">Add</button>
+  </form>
+  </div>
+  </div>
+</body>
+
+</html>

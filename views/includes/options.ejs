@@ -1,0 +1,145 @@
+<style>
+  .filters {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+  }
+  .filter-image {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .filter {
+    opacity: 0.7;
+    cursor: pointer;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    vertical-align: center;
+    text-align: center;
+  }
+  .filter p {
+    font-size: 0.9rem;
+  }
+  .filter:hover {
+    opacity: 1;
+  }
+  .tax_info {
+    display: none;
+  }
+  .tax_switch {
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-left: 2rem;
+  }
+</style>
+<div class="filters">
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-fire" style="color: #151514"></i>
+    </div>
+    <p>Trending</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-umbrella-beach" style="color: #000000"></i>
+    </div>
+    <p>Beach</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-bed" style="color: #000000"></i>
+    </div>
+    <p>Rooms</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-key" style="color: #0d0d0d"></i>
+    </div>
+    <p>New</p>
+  </div>
+  <div class="filter d-sm-none">
+    <div class="filter-image">
+      <i class="fa-solid fa-mountain-city" style="color: #000000"></i>
+    </div>
+    <p>Mountains</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-person-swimming" style="color: #000000"></i>
+    </div>
+    <p>Amazing Pools</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-campground" style="color: #000000"></i>
+    </div>
+    <p>Camping</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-cow" style="color: #000000"></i>
+    </div>
+    <p>Farms</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-brands fa-fort-awesome" style="color: #000000"></i>
+    </div>
+    <p>Castles</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-ship" style="color: #000000"></i>
+    </div>
+    <p>Boats</p>
+  </div>
+  <div class="filter">
+    <div class="filter-image">
+      <i class="fa-solid fa-igloo" style="color: #000000"></i>
+    </div>
+    <p>Domes</p>
+  </div>
+  <div>
+    <div class="form-check-reverse form-switch tax_switch">
+      <div
+        style="
+          padding: 6px;
+          padding-left: 8px;
+          padding-right: 8px;
+          height: max-content;
+        "
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="flexSwitchCheckDefault"
+        />
+        <label
+          class="form-check-label"
+          style="color: darkslategray"
+          for="flexSwitchCheckDefault"
+          >Display Total After Taxes</label
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const taxSwitch = document.querySelector(".tax_switch");
+  let isTaxVisible = false; 
+
+  taxSwitch.addEventListener("click", () => {
+    const taxInfo = document.querySelectorAll(".tax_info");
+    const withoutTax = document.querySelectorAll(".without-tax");
+
+    isTaxVisible = !isTaxVisible;
+    taxInfo.forEach((info) => {
+      info.style.display = isTaxVisible ? "inline" : "none";
+    });
+
+    withoutTax.forEach((item) => {
+      item.style.display = isTaxVisible ? "none" : "inline";
+    });
+  });
+</script>

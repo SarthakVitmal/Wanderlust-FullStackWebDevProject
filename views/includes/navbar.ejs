@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="" type="image/icon">
+    <style>
+      .btn-search{
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        background-color: red;
+      }
+      .btn-search:hover{
+        background-color: red;
+      }
+      .search-bar{
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        width: 20rem;
+      }
+    </style> 
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top w-100">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/listings"><i class="fa-solid fa-compass"></i></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" href="/listings">Explore</a>
+            </div>
+            <div class="navbar-nav ms-auto">
+              <form method="get" action="/listings/search" class="navbar-search" style="display: flex;">
+                <input class="form-control search-bar mr-sm-2" name="q" type="search" placeholder="Search Destinations" aria-label="Search">
+                <button class="btn btn-search my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass" style="color: #fff;"></i></button>
+              </form>            
+            </div>
+            <div class="navbar-nav ms-auto">
+              <a class="nav-link" href="/listings/new">Add Stay</a>
+              <% console.log(currentUser) %>
+              <% if (!currentUser) { %>
+                <a class="nav-link" href="/signup"><b>Sign up</b></a>
+                <a class="nav-link" href="/login"><b>Login</b></a>
+              <% } if(currentUser) { %>
+                <a class="nav-link" href="/logout"><b>Logout</b></a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </nav>
+</body>
+</html>
