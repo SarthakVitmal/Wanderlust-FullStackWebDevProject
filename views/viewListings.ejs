@@ -82,6 +82,7 @@ const mapToken = "<%=process.env.MAP_TOKEN%>";
                 <p class="card-title"><%=review.comment%></p>
               </div>
 
+              <%if(currentUser && viewlisting.owner.equals(currentUser._id)){%>
               <div>
                 <form method="post" action="/listings/<%=viewlisting._id%>/reviews/<%=review._id%>?_method=Delete">
                   <button class="bg-dark rounded text-white mt-2 mb-2">
@@ -89,6 +90,7 @@ const mapToken = "<%=process.env.MAP_TOKEN%>";
                   </button>
                 </form>
               </div>
+              <%}%>
             </div>
             <% } %>
           </div>
