@@ -125,11 +125,28 @@ footer{
   input{
     width: 100%;
   }
+  .comment-section{
+    width: 100%;
+  }
+  #map{ 
+    height: 300px;
+    width: 10px;
+    border-radius: 10px;
+    margin-left: 0%;
+    }
 }
 @media(min-width:800px){
   .show-img{
     height: 40vh;
     width: 400px;
+    border-radius: 10px;
+  }
+  .comment-section{
+    width: 100%;
+  }
+  .view-img{
+    height: 60vh;
+    width: 700px;
     border-radius: 10px;
   }
 }

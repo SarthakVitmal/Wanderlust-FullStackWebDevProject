@@ -12,7 +12,7 @@
   <%- include("../views/includes/options.ejs") %>
   <h2 class="listings mx-4"></h2>
   <div class="row row-cols-lg-3 row-cols-md-2 listings row-cols-sm-1 mx-2 ">
-    <% for (listing of allListings) { %><a href="http://wanderlust-web-service.onrender.com/listings/<%= listing.id %>">
+    <% for (listing of allListings) { %><a href="http://localhost:8080/listings/<%= listing.id %>">
       <div class="card">
         <img src="<%= listing.image.url %>" class="show-img card-img-top" alt="listing_image" />
         <div class="card-img-overlay"></div>

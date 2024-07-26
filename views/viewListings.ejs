@@ -13,11 +13,11 @@
 const listing = <%- JSON.stringify(viewlisting) %>;
 const mapToken = "<%=process.env.MAP_TOKEN%>";
   </script>
-  <div class="row mt-3 offset-sm-2">
+  <div class="row mt-3 offset-md-1">
     <div class="col-md-9 col-sm-4">
       <h2 class="card-text"><%=viewlisting.title%></h2>
       <div class="card-body" class="col-6 offset-2">
-        <img src="<%=viewlisting.image.url%>" class="card-img-top show-img" alt="listing_image" />
+        <img src="<%=viewlisting.image.url%>" class="card-img-top view-img" alt="listing_image" />
         <div class="card-body w-md-25">
           <p class="card-text">
             Owned by <i><%=viewlisting.owner.username%></i>
@@ -62,7 +62,7 @@ const mapToken = "<%=process.env.MAP_TOKEN%>";
           </div>
           <div>
             <label for="comment" class="form-label">Comment</label>
-            <textarea class="form-control mb-3" id="comment" rows="5" name="review[comment]" required></textarea>
+            <textarea class="form-control mb-3 comment-area col-sm-4" style="width: 150%;" id="comment" rows="5" name="review[comment]" required></textarea>
             <div class="invalid-feedback">
               Please add some comments for review
             </div>
@@ -95,7 +95,7 @@ const mapToken = "<%=process.env.MAP_TOKEN%>";
           <%}%>
       </div>
       <%if(currentUser){%>
-      <div class="col-8 mb-3">
+      <div class="col-md-8 mb-3">
         <h3>Where you'll be</h3>
         <div id="map"></div>
       </div>
