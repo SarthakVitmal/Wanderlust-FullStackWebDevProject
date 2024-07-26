@@ -129,7 +129,7 @@ footer{
 @media(min-width:800px){
   .show-img{
     height: 40vh;
-    width: 500px;
+    width: 400px;
     border-radius: 10px;
   }
 }
