@@ -13,13 +13,12 @@
 const listing = <%- JSON.stringify(viewlisting) %>;
 const mapToken = "<%=process.env.MAP_TOKEN%>";
   </script>
-  <div class="row mt-3 offset-2">
-    <div class="col-8">
-      <h2><%=viewlisting.title%></h2>
-
+  <div class="row mt-3 offset-sm-2">
+    <div class="col-md-9 col-sm-4">
+      <h2 class="card-text"><%=viewlisting.title%></h2>
       <div class="card-body" class="col-6 offset-2">
-        <img src="<%=viewlisting.image.url%>" class="card-img-top show-img mh-100 w-50" alt="listing_image" />
-        <div class="card-body">
+        <img src="<%=viewlisting.image.url%>" class="card-img-top show-img" alt="listing_image" />
+        <div class="card-body w-md-25">
           <p class="card-text">
             Owned by <i><%=viewlisting.owner.username%></i>
           </p>

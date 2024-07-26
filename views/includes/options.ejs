@@ -1,36 +1,43 @@
 <style>
-  .filters {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: flex-start;
-    align-content: center;
+  @media (min-width: 1080px) {
+    .filters {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: flex-start;
+      align-content: center;
+    }
+    .filter-image {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+    .filter {
+      opacity: 0.7;
+      cursor: pointer;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      vertical-align: center;
+      text-align: center;
+    }
+    .filter p {
+      font-size: 0.9rem;
+    }
+    .filter:hover {
+      opacity: 1;
+    }
+    .tax_info {
+      display: none;
+    }
+    .tax_switch {
+      border: 1px solid gray;
+      border-radius: 10px;
+      margin-left: 2rem;
+    }
   }
-  .filter-image {
-    align-items: center;
-    justify-content: center;
-    display: flex;
-  }
-  .filter {
-    opacity: 0.7;
-    cursor: pointer;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    vertical-align: center;
-    text-align: center;
-  }
-  .filter p {
-    font-size: 0.9rem;
-  }
-  .filter:hover {
-    opacity: 1;
-  }
-  .tax_info {
-    display: none;
-  }
-  .tax_switch {
-    border: 1px solid gray;
-    border-radius: 10px;
-    margin-left: 2rem;
+  @media (max-width: 900px) {
+    .filters {
+      display: none;
+    }
   }
 </style>
 <div class="filters">
@@ -127,7 +134,7 @@
 </div>
 <script>
   const taxSwitch = document.querySelector(".tax_switch");
-  let isTaxVisible = false; 
+  let isTaxVisible = false;
 
   taxSwitch.addEventListener("click", () => {
     const taxInfo = document.querySelectorAll(".tax_info");
