@@ -163,3 +163,9 @@ border-radius: 10px;
 margin-left: 0%;
 }
 
+.search-bar:focus{
+  outline: none;
+  border-color: gray;
+  box-shadow: none; /* Add a custom shadow */
+
+}
