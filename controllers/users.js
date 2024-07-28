@@ -10,7 +10,7 @@ const User = require('../models/user')
         let newUser = new User({ username, email, password });
         const registeredUser = await User.register(newUser, password);
         
-        await sendWelcomeEmail(email,username)
+        await sendWelcomeEmail(username,email)
         
         req.login(registeredUser, (err) => {
           if (err) {
