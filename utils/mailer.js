@@ -19,7 +19,7 @@ const sendWelcomeEmail = async (username, userEmail) => {
       subject: 'Welcome to Wanderlust!',
       html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-          <h2>Dear ${userName},</h2>
+          <h2>Dear ${username},</h2>
           <p><b>Welcome to Wanderlust!</b></p>
           <p>We're thrilled to have you join our community of explorers, adventurers, and travel enthusiasts. At Wanderlust, we believe that every journey is a story waiting to be told, and we can't wait to be a part of yours.</p>
           <p>🌍 <b>Discover New Destinations</b><br>
@@ -37,6 +37,7 @@ const sendWelcomeEmail = async (username, userEmail) => {
           wanderlustteam.explore@gmail.com<br>
       </div>`
     };
+    console.log(mailOptions.html)
     await transporter.sendMail(mailOptions);
     console.log('Mail sent successfully');
   } catch (error) {

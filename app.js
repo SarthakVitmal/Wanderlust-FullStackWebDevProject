@@ -66,25 +66,26 @@ passport.use(new GoogleStrategy({
     callbackURL: process.env.NODE_ENV === 'production'
         ? 'https://wanderlust-web-service.onrender.com/auth/google/callback'
         : 'http://localhost:8080/auth/google/callback',
-        scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
+    scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
     },
-async (accessToken, refreshToken, profile, done) => {
-    try {
-        let user = await User.findOne({ googleId: profile.id });
-        if (!user) {
-            user = new User({
-                googleId: profile.id,
-                username: profile.displayName,
-                email: profile.emails[0].value  
-            });
-            await user.save();
-            sendWelcomeEmail(username,email)
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+            const user = await User.findOne({ googleId: profile.id });
+            if (!user) {
+                user = new User({
+                    googleId: profile.id,
+                    username: profile.displayName,
+                    email: profile.emails[0].value
+                });
+                await user.save();
+                await sendWelcomeEmail(user.email, user.username);
+            }
+            return done(null, user);
+        } catch (error) {
+            return done(error, false);
         }
-        return done(null, user);
-    } catch (error) {
-        return done(error, false);
     }
-}));
+));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
