@@ -78,7 +78,7 @@ passport.use(new GoogleStrategy({
                     email: profile.emails[0].value
                 });
                 await user.save();
-                await sendWelcomeEmail(user.email, user.username);
+                await sendWelcomeEmail(user.username, user.email);
             }
             return done(null, user);
         } catch (error) {
