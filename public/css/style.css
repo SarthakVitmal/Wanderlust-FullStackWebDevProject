@@ -169,3 +169,15 @@ margin-left: 0%;
   box-shadow: none; /* Add a custom shadow */
 
 }
+@media(max-width:768px){
+  .navbar-collapse{
+      background-color: lightgray;
+      text-align: center;
+      border-radius: 10px;
+  }
+  .navbar-search{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
