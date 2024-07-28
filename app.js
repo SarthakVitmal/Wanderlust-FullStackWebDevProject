@@ -17,6 +17,7 @@ const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20').Strategy; // Ensure correct import
 const User = require('./models/user.js');
 const cookieParser = require('cookie-parser');
+const { sendWelcomeEmail } = require('./utils/mailer.js');
 const port = 8080;
 
 const dbUrl = process.env.ATLASDB_URL;
@@ -77,7 +78,7 @@ async (accessToken, refreshToken, profile, done) => {
                 email: profile.emails[0].value  
             });
             await user.save();
-            sendWelcomeEmail(profile.displayName,profile.email[0].value)
+            sendWelcomeEmail(username,email)
         }
         return done(null, user);
     } catch (error) {
@@ -110,7 +111,6 @@ const listingsRouter = require('./routes/listing.js');
 const reviewsRouter = require('./routes/review.js');
 const userRouter = require('./routes/user.js');
 const authRouter = require('./routes/auth');
-const { sendWelcomeEmail } = require('./utils/mailer.js');
 app.use('/listings', listingsRouter);
 app.use('/listings/:id/reviews', reviewsRouter);
 app.use('/', userRouter);
