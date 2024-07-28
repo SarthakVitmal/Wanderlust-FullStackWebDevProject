@@ -70,7 +70,7 @@ passport.use(new GoogleStrategy({
     },
     async (accessToken, refreshToken, profile, done) => {
         try {
-            const user = await User.findOne({ googleId: profile.id });
+            let user = await User.findOne({ googleId: profile.id });
             if (!user) {
                 user = new User({
                     googleId: profile.id,
