@@ -1,4 +1,4 @@
-const { sendEmail } = require('../utils/mailer'); // Adjust the path as needed
+const { sendWelcomeEmail } = require('../utils/mailer.js');
 const User = require('../models/user')
 
   module.exports.renderSignupForm = (req, res) => {
@@ -9,16 +9,9 @@ const User = require('../models/user')
         let { username, email, password } = req.body;
         let newUser = new User({ username, email, password });
         const registeredUser = await User.register(newUser, password);
-    
-        const welcomeMessage = `Hello ${username},\n\nWelcome to Wanderlust! We're glad to have you here.\nWe are thrilled to have you join our community. Whether you are here to explore new destinations, share your experiences, or connect with fellow travelers, we're excited to be part of your journey.
-\nThank you for signing up, and happy exploring!
-\nRegards,\nSarthak Vitmal - Team Wanderlust`;
-        await sendEmail({
-          to: registeredUser.email,
-          subject: 'Welcome to Wanderlust',
-          text: welcomeMessage
-        });
-    
+        
+        await sendWelcomeEmail(email,username)
+        
         req.login(registeredUser, (err) => {
           if (err) {
             return next(err); 

@@ -1,6 +1,7 @@
-if(process.env.NODE_ENV != "production"){
+if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -9,41 +10,40 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const ExpressError = require('./utils/ExpressError.js');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const GoogleStrategy = require('passport-google-oauth20')
+const GoogleStrategy = require('passport-google-oauth20').Strategy; // Ensure correct import
 const User = require('./models/user.js');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const port = 8080;
 
 const dbUrl = process.env.ATLASDB_URL;
 
 const store = MongoStore.create({
-    mongoUrl:dbUrl,
-    crypto:{
-        secret:process.env.SECRET
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET
     },
     touchAfter: 24 * 3600,
-})
+});
 
 const sessionOptions = {
     store,
-    secret:process.env.SECRET,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie : {
-        expires : Date.now() + 1000 * 60 * 60 * 24 *  7,
-        maxAge : 1000 * 60 * 60 * 24 * 7,
-        httpOnly : true,
+    cookie: {
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true,
     }
 };
 
-store.on("error",()=>{
-    console.log("Error in MONGO SESSION STORE ",error);
-})
-
+store.on("error", (error) => {
+    console.log("Error in MONGO SESSION STORE", error);
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -52,7 +52,6 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.engine("ejs", ejsMate);
-app.use(express.json());
 app.use(cookieParser());
 app.use(session(sessionOptions));
 app.use(flash());
@@ -63,27 +62,29 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "auth/google/callback",
-    scope:["profile","email"],
-},
-async(accessToken,refreshToken,profile,done) => {
-    try{
-        let user = await User.findOne({googleId:profile.id});
-        if(!user){
+    callbackURL: process.env.NODE_ENV === 'production'
+        ? 'https://wanderlust-web-service.onrender.com/auth/google/callback'
+        : 'http://localhost:8080/auth/google/callback',
+        scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
+    },
+async (accessToken, refreshToken, profile, done) => {
+    try {
+        let user = await User.findOne({ googleId: profile.id });
+        if (!user) {
             user = new User({
                 googleId: profile.id,
                 username: profile.displayName,
-                email : profile.email[0].value
-            })
-            await user.save()
+                email: profile.emails[0].value  
+            });
+            await user.save();
+            sendWelcomeEmail(profile.displayName,profile.email[0].value)
         }
-        return done(null,user);
+        return done(null, user);
+    } catch (error) {
+        return done(error, false);
     }
-    catch(error){
-        return done(error,false)
-    }
-}
-))
+}));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
@@ -92,7 +93,7 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next();
 });
-// const Mongo_Url = "mongodb://127.0.0.1:27017/wanderlust";
+
 main()
     .then(() => {
         console.log("Connection to DB Successful");
@@ -102,21 +103,18 @@ main()
     });
 
 async function main() {
-     mongoose.connect(dbUrl);
+    mongoose.connect(dbUrl);
 }
 
-const listingsRouter = require('./routes/listing.js')
-const reviewsRouter = require('./routes/review.js')
+const listingsRouter = require('./routes/listing.js');
+const reviewsRouter = require('./routes/review.js');
 const userRouter = require('./routes/user.js');
 const authRouter = require('./routes/auth');
-const { error } = require('console');
-app.use('/listings',listingsRouter);
-app.use('/listings/:id/reviews',reviewsRouter);
-app.use('/',userRouter);
+const { sendWelcomeEmail } = require('./utils/mailer.js');
+app.use('/listings', listingsRouter);
+app.use('/listings/:id/reviews', reviewsRouter);
+app.use('/', userRouter);
 app.use('/', authRouter);
-// app.get("/", (req, res) => {
-//     res.send("Go to /listings");
-// });
 
 app.use((err, req, res, next) => {
     console.log(err);
