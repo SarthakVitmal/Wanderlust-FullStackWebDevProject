@@ -1,7 +1,6 @@
 if(process.env.NODE_ENV != "production"){
     require('dotenv').config();
 }
-
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -14,6 +13,7 @@ const MongoStore = require('connect-mongo')
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const GoogleStrategy = require('passport-google-oauth20')
 const User = require('./models/user.js');
 const cookieParser = require('cookie-parser')
 const port = 8080;
@@ -59,6 +59,31 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "auth/google/callback",
+    scope:["profile","email"],
+},
+async(accessToken,refreshToken,profile,done) => {
+    try{
+        let user = await User.findOne({googleId:profile.id});
+        if(!user){
+            user = new User({
+                googleId: profile.id,
+                username: profile.displayName,
+                email : profile.email[0].value
+            })
+            await user.save()
+        }
+        return done(null,user);
+    }
+    catch(error){
+        return done(error,false)
+    }
+}
+))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
@@ -83,11 +108,12 @@ async function main() {
 const listingsRouter = require('./routes/listing.js')
 const reviewsRouter = require('./routes/review.js')
 const userRouter = require('./routes/user.js');
+const authRouter = require('./routes/auth');
 const { error } = require('console');
 app.use('/listings',listingsRouter);
 app.use('/listings/:id/reviews',reviewsRouter);
 app.use('/',userRouter);
-
+app.use('/', authRouter);
 // app.get("/", (req, res) => {
 //     res.send("Go to /listings");
 // });
