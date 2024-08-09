@@ -1,5 +1,7 @@
 const { sendWelcomeEmail } = require('../utils/mailer.js');
 const User = require('../models/user')
+const Listing = require('../models/listing')
+
 
   module.exports.renderSignupForm = (req, res) => {
     res.render("users/signup.ejs");
@@ -42,4 +44,10 @@ const User = require('../models/user')
       req.flash("success", "You are logged out!");
       res.redirect("/listings");
     });
+  };
+
+  module.exports.userProfile = async (req, res) => {
+    let userId = req.user._id;
+    let userListings = await Listing.find({ owner: userId });
+    res.render("users/profile.ejs", { currentUser: req.user, userListings });
   };

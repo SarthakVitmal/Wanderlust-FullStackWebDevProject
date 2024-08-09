@@ -26,7 +26,7 @@
               <%= listing.price.toLocaleString("en-IN") %>
             </span>
             <span class="tax_info"><i>
-                <%= (listing.price * 1.8).toLocaleString("en-IN") %>
+                <%= (listing.price * 0.18 + listing.price).toLocaleString("en-IN") %>
               </i></span>
             / night
           </p>
