@@ -25,8 +25,8 @@ const userSchema = new Schema({
     isEmailVerified : {
         type: Boolean,
         default: false,
-    }
-})
+    },
+},{timestamps:true})
 
 userSchema.plugin(passportLocalMongoose,{
     usernameField : "email"

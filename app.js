@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
-
+require('./scheduledTask.js');
 const express = require('express');
 const app = express();
 const path = require('path');
