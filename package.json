@@ -38,5 +38,8 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
     "password": "^0.1.1"
+  },
+  "devDependencies": {
+    "husky": "^9.1.4"
   }
 }
