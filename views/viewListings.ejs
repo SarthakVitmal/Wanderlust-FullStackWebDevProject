@@ -32,7 +32,7 @@ const mapToken = "<%=process.env.MAP_TOKEN%>";
       </div>
       <%if(currentUser && viewlisting.owner.equals(currentUser._id)){%>
       <div class="btns d-flex mt-2">
-        <a href="https://wanderlust-web-service.onrender.coms/listings/<%=viewlisting.id%>/edit" class="btn btn-dark mb-3">Edit</a>
+        <a href="https://wanderlust-web-service.onrender.com/listings/<%=viewlisting.id%>/edit" class="btn btn-dark mb-3">Edit</a>
         <form method="post" action="/listings/<%=viewlisting.id%>?_method=Delete" novalidate class="needs-validation mx-2">
           <button class="btn btn-dark mb-3">Delete</button>
         </form>

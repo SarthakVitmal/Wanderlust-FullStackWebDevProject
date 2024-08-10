@@ -58,3 +58,13 @@ module.exports.fileValidation = async(req,res,next) => {
     }
     next();
 }
+
+module.exports.ensureVerified = (req, res, next) => {
+    console.log("User:", req.user);
+    if (req.user && req.user.isEmailVerified) {
+      return next();
+    }
+    req.flash('error', 'Please verify your email address.');
+    res.redirect('/login');
+  };
+  

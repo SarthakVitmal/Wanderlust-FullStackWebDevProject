@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendWelcomeEmail = async (username, userEmail) => {
+module.exports.sendWelcomeEmail = async (username, userEmail) => {
   try {
     let mailOptions = {
       from: process.env.SMTP_EMAIL,
@@ -46,6 +46,21 @@ const sendWelcomeEmail = async (username, userEmail) => {
   }
 };
 
-module.exports = {
-  sendWelcomeEmail
-};
+module.exports.sendEmailVerificationEmail = async(email,verificationLink)=>{
+    const transporter = nodemailer.createTransport({
+      service:'Gmail',
+      auth:{
+        user:process.env.SMTP_EMAIL,
+        pass:process.env.SMTP_NPASSWORD,
+      }
+    })
+
+    const mailOptions = {
+      from: process.env.SMTP_EMAIL,
+      to:email,
+      subject:'Wanderlust:Verify Your Email',
+      text: `Please verify your email by clicking on the following link: ${verificationLink}`,
+    }
+    await transporter.sendMail(mailOptions);
+    console.log("Mail send successfully");
+}
