@@ -64,7 +64,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.NODE_ENV === 'production'
-        ? 'https://wanderlust101.vercel.app/auth/google/callback'
+        ? 'https://wanderlust-web-service.onrender.com/auth/google/callback'
         : 'http://localhost:8080/auth/google/callback',
     scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
     },
@@ -119,7 +119,6 @@ app.use('/listings', listingsRouter);
 app.use('/listings/:id/reviews', reviewsRouter);
 app.use('/', userRouter);
 app.use('/', authRouter);
-// app.use('/listings/:id/booking',bookingRouter)
 
 app.use((err, req, res, next) => {
     console.log(err);
