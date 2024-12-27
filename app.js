@@ -113,13 +113,13 @@ const listingsRouter = require('./routes/listing.js');
 const reviewsRouter = require('./routes/review.js');
 const userRouter = require('./routes/user.js');
 const authRouter = require('./routes/auth');
-const bookingRouter = require('./routes/booking.js');
+// const bookingRouter = require('./routes/booking.js');
 
 app.use('/listings', listingsRouter);
 app.use('/listings/:id/reviews', reviewsRouter);
 app.use('/', userRouter);
 app.use('/', authRouter);
-app.use('/listings/:id/booking',bookingRouter)
+// app.use('/listings/:id/booking',bookingRouter)
 
 app.use((err, req, res, next) => {
     console.log(err);
